@@ -107,5 +107,26 @@ src_file_types = [x.split(".")[-1] for x in srcFiles if "." in x]
 src_file_types = list(set(src_file_types))
 get_final_file_types(src_file_types)
 
+final_src_files = [x for x in srcFiles if x.split(".")[-1] in file_types]
+
+num_copied = 0
+for file in final_src_files :
+    try :
+        shutil.copy2(os.path.join(srcDir,file),dstDir)
+        num_copied+=1
+    except :
+        failed_files.append(file)
+        
+        
+print(f"Of {len(final_src_files)}, successfuly copied {num_copied} files")
+print(f"Accuracy of {(round(num_copied/len(final_src_files))*100,5)}%")
+
+
+with open("CopyFilesFiles/UnsuccessfulCopies.txt", "w") as file:
+    for failed_file in failed_files:
+        file.write(failed_file + "\n")
+
+    
+    
 
 
