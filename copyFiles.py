@@ -89,6 +89,10 @@ def update_file_types(inpt,src_file_types):
 
     return file_types
 
+def print_loop_percentage(i,n,interval = 5) :
+    if i % int(n/interval) == 0 :
+        print(f"{round(i/n*100,2)}% done")
+
 # ===========
 
 
@@ -111,6 +115,7 @@ final_src_files = [x for x in srcFiles if x.split(".")[-1] in file_types]
 
 num_copied = 0
 for file in final_src_files :
+    print_loop_percentage(num_copied,len(final_src_files),interval = 5)
     try :
         shutil.copy2(os.path.join(srcDir,file),dstDir)
         num_copied+=1
@@ -118,7 +123,7 @@ for file in final_src_files :
         failed_files.append(file)
         
         
-print(f"Of {len(final_src_files)}, successfuly copied {num_copied} files")
+print(f"Of {len(final_src_files)} files, successfuly copied {num_copied}")
 print(f"Accuracy of {(round(num_copied/len(final_src_files))*100,5)}%")
 
 
